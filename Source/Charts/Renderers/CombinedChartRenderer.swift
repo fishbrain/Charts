@@ -160,7 +160,12 @@ open class CombinedChartRenderer: DataRenderer
                 data = (renderer as! BubbleChartRenderer).dataProvider?.bubbleData
             }
             
-            let dataIndex = data == nil ? nil : (chart?.data as? CombinedChartData)?.allData.index(of: data!)
+            let dataIndex: Int? = {
+                guard let data = data else { return nil }
+                return (chart?.data as? CombinedChartData)?
+                    .allData
+                    .firstIndex(of: data)
+            }()
             
             let dataIndices = indices.filter{ $0.dataIndex == dataIndex || $0.dataIndex == -1 }
             
@@ -168,7 +173,7 @@ open class CombinedChartRenderer: DataRenderer
         }
     }
 
-    /// - returns: The sub-renderer object at the specified index.
+    /// - Returns: The sub-renderer object at the specified index.
     @objc open func getSubRenderer(index: Int) -> DataRenderer?
     {
         if index >= _renderers.count || index < 0
@@ -181,7 +186,7 @@ open class CombinedChartRenderer: DataRenderer
         }
     }
 
-    /// - returns: All sub-renderers.
+    /// All sub-renderers.
     @objc open var subRenderers: [DataRenderer]
     {
         get { return _renderers }
@@ -190,10 +195,10 @@ open class CombinedChartRenderer: DataRenderer
     
     // MARK: Accessors
     
-    /// - returns: `true` if drawing values above bars is enabled, `false` ifnot
+    /// `true` if drawing values above bars is enabled, `false` ifnot
     @objc open var isDrawValueAboveBarEnabled: Bool { return drawValueAboveBarEnabled }
     
-    /// - returns: `true` if drawing shadows (maxvalue) for each bar is enabled, `false` ifnot
+    /// `true` if drawing shadows (maxvalue) for each bar is enabled, `false` ifnot
     @objc open var isDrawBarShadowEnabled: Bool { return drawBarShadowEnabled }
     
     /// the order in which the provided data objects should be drawn.
