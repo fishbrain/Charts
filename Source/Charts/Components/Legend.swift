@@ -278,6 +278,10 @@ open class Legend: ComponentBase
                     {
                         width += stackSpace
                     }
+                    else
+                    {
+                        maxHeight += labelLineHeight
+                    }
                 }
                 
                 maxWidth = max(maxWidth, width)
@@ -390,7 +394,7 @@ open class Legend: ComponentBase
         }
         
         neededWidth += xOffset
-        neededHeight += yOffset
+        neededHeight += -yOffset
     }
     
     /// MARK: - Custom legend
